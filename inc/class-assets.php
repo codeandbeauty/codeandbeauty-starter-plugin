@@ -1,8 +1,4 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die(); // No direct access!!!
-}
-
 /**
  * Class CodeAndBeauty_Assets
  *
@@ -41,7 +37,7 @@ class CodeAndBeauty_Assets {
 
 	public function __construct( $mainClass ) {
 		// Let's grab the plugin url and version first
-		$this->src = $mainClass->__get( 'plugin_url' );
+		$this->src = $mainClass->__get( 'plugin_url' ) . 'assets/';
 		$this->version = $mainClass->__get( 'version' );
 
 		// Set front assets
@@ -88,7 +84,7 @@ class CodeAndBeauty_Assets {
 		 * the entries in the array.
 		 */
 		$css_dependencies = array( 'dashicons' );
-		$js_dependencies = array( 'jquery' );
+		$js_dependencies = array( 'jquery', 'backbone' );
 
 		/***************************************
 		 * Include your stylesheets here
@@ -96,6 +92,7 @@ class CodeAndBeauty_Assets {
 		 * Sample:
 		 * `wp_enqueue_style( 'cad-stylesheet', $this->src . 'css/style.min.css', $css_dependencies, $this->version );`
 		 **************************************/
+		wp_enqueue_style( 'cad-admin', $this->src . 'css/admin.min.css', $css_dependencies, $this->version );
 
 		/**************************************
 		 * Include your scripts here
@@ -106,6 +103,24 @@ class CodeAndBeauty_Assets {
 		 * Sample:
 		 * `wp_enqueue_script( 'cad-script', $this->src . 'js/script.min.js', $js_dependencies, $this->version, true );`
 		 *************************************/
+		// Admin build
+		wp_enqueue_script( 'cad-admin-js', $this->src . 'js/admin.min.js', $js_dependencies, $this->version, true );
+
+		// Set admin local variables
+		$local_vars = $this->get_admin_vars();
+		wp_localize_script( 'cad-admin-js', 'codeandbeauty', $local_vars );
+	}
+
+	protected function get_admin_vars() {
+		$vars = array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
+			'messages' => array(
+				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'cad' ),
+			)
+		);
+
+		return $vars;
 	}
 
 	public function front_assets() {

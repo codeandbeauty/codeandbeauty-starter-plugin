@@ -1,0 +1,22 @@
+/** Write all .scss classes that will be use in administration area.*/
+.notify-message {
+  position: fixed;
+  border: 1px solid #EED3D7;
+  background-color: #F2DEDE;
+  color: #B94A48;
+  z-index: 99;
+  padding: 8px 15px;
+  top: 10%;
+  left: 40%;
+}
+
+.notify-message:before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  z-index: -1;
+}

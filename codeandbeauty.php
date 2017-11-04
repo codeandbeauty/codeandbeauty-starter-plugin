@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: YOUR-PLUGIN-NAME
+ * Plugin Name: CodeAndBeauty Starter Plugin
  * Description: Write your plugin description here.
  * Author: Code&Beauty
  * Author URI: http://www.codeandbeauty.com
  * Plugin URI: http://www.codeandbeauty.com/starter-plugin
- * Version: VERSION (i.e. 1.0.0)
+ * Version: 1.0.0
  * Text Domain: cad
  * License: GPLv2 or higher
  */
@@ -36,7 +36,7 @@ final class CodeAndBeauty {
 	 *
 	 * @var null
 	 */
-	private $_instance = null;
+	static $_instance = null;
 
 	/**
 	 * A single instance caller.
@@ -65,7 +65,7 @@ final class CodeAndBeauty {
 		register_deactivation_hook( __FILE__, array( $this, 'onPluginDeactivate' ) );
 
 		// Initialize this plugin
-		add_action( 'plugins_loaded', array( $this, 'initialize' ) );
+		add_action( 'plugins_loaded', array( $this, 'initialized' ) );
 	}
 
 	public function __get( $name ) {
@@ -91,10 +91,10 @@ final class CodeAndBeauty {
 		if ( $this->render( 'inc/class-ajax' ) ) {
 			$this->__set( 'ajax', new CodeAndBeauty_Ajax() );
 		}
-
+;
 		// Load assets class to include the needed scripts and stylesheets
 		if ( $this->render( 'inc/class-assets' ) ) {
-			$this->__set( 'assets', new CodeAndBeauty__Assets( $this ) );
+			$this->__set( 'assets', new CodeAndBeauty_Assets( $this ) );
 		}
 
 		/**
