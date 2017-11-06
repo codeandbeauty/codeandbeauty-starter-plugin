@@ -17,7 +17,7 @@ module.exports = function(grunt) {
  	// Load all grunt tasks.
  	require( 'load-grunt-tasks' )(grunt);
 
- 	var buildtime, conf, pkg, banner;
+ 	var buildtime, conf, pkg, banner, plugin_name, plugin_slug, plugin_copy_config;
 
  	buildtime = new Date().toISOString();
 
@@ -67,6 +67,36 @@ module.exports = function(grunt) {
              ' * Copyright (c) <%= grunt.template.today("yyyy") %>;\n' +
              ' * Licensed: GNU General Public License v2 or later\n' +
              ' */\n';
+
+    plugin_copy_config = {
+	    expand: true,
+		src: [
+		    '*',
+		    '**',
+		    '!node_modules/*',
+		    '!node_modules/**',
+		    '!node_modules/',
+		    '!logs/*',
+		    '!logs/',
+		    '!.sass-cache/*',
+		    '!.sass-cache/**',
+		    '!.sass-cache/'
+		],
+		dest: '',
+		noEmpty: true,
+		options: {
+		    process: function(content) {
+                content = content.replace( /CodeAndBeauty/g, plugin_name );
+                content = content.replace( /codeandbeauty/g, plugin_slug );
+
+                return content;
+		    }
+		},
+		rename: function( dest, src_path ) {
+		    src_path = src_path.replace( /codeandbeauty/g, plugin_slug );
+		    return dest + '/' + src_path;
+		}
+	};
 
  	grunt.initConfig({
  	    pkg: pkg,
@@ -275,6 +305,10 @@ module.exports = function(grunt) {
 				staticBackup: false,
 				noGlobalsBackup: false
 			}
+		},
+
+		copy: {
+		    all: plugin_copy_config
 		}
  	});
 
@@ -294,4 +328,23 @@ module.exports = function(grunt) {
  	// Ensure that validation runs first before generating the release
  	// Ensure that the language gets regenerated
  	grunt.registerTask( 'generate-zip', ['js', 'css', 'makepot', 'compress'] );
+
+ 	grunt.registerTask( 'create-plugin', 'Generating new plugin...', function() {
+ 	    var folder, name, slug;
+
+ 	    folder = grunt.option('folder');
+ 	    name = grunt.option('name');
+ 	    slug = grunt.option('slug');
+
+ 	    plugin_copy_config.dest = '../' + folder;
+
+ 	    // Ensure that the name and slug doesn't contain spaces
+ 	    name = name.replace( / /g, '' );
+ 	    slug = slug.replace( / /g, '' );
+
+ 	    plugin_name = name;
+ 	    plugin_slug = slug;
+
+ 	    grunt.task.run( ['copy:all'] );
+ 	});
 };
