@@ -34,7 +34,7 @@ class CodeAndBeauty_Ajax {
 
 		if ( ! empty( $request->_wpnonce )
 			&& wp_verify_nonce( $request->_wpnonce, 'codeandbeauty_nonce' ) ) {
-			$request_action = $request->request_action;
+			$request_action = $request->action;
 
 			if ( method_exists( $this, $request_action ) ) {
 				$response = call_user_func( array( $this, $request_action ), $request );
