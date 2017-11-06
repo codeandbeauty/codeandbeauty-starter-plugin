@@ -6,7 +6,7 @@
  * Author URI: http://www.codeandbeauty.com
  * Plugin URI: http://www.codeandbeauty.com/starter-plugin
  * Version: 1.0.0
- * Text Domain: cad
+ * Text Domain: TextDomain
  * License: GPLv2 or higher
  */
 

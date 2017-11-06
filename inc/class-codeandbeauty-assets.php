@@ -132,7 +132,7 @@ class CodeAndBeauty_Assets {
 			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
 			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
 			'messages' => array(
-				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'cad' ),
+				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'TEXTDOMAIN' ),
 			),
 		);
 
@@ -180,7 +180,7 @@ class CodeAndBeauty_Assets {
 			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
 			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
 			'messages' => array(
-				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'cad' ),
+				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'TEXTDOMAIN' ),
 			),
 		);
 

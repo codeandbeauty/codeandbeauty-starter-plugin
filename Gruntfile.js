@@ -17,7 +17,7 @@ module.exports = function(grunt) {
  	// Load all grunt tasks.
  	require( 'load-grunt-tasks' )(grunt);
 
- 	var buildtime, conf, pkg, banner, plugin_name, plugin_slug, plugin_copy_config;
+ 	var buildtime, conf, pkg, banner, plugin_name, plugin_slug, plugin_domain, plugin_copy_config;
 
  	buildtime = new Date().toISOString();
 
@@ -88,6 +88,7 @@ module.exports = function(grunt) {
 		    process: function(content) {
                 content = content.replace( /CodeAndBeauty/g, plugin_name );
                 content = content.replace( /codeandbeauty/g, plugin_slug );
+                content = content.replace( /TEXTDOMAIN/g, plugin_domain );
 
                 return content;
 		    }
@@ -330,11 +331,12 @@ module.exports = function(grunt) {
  	grunt.registerTask( 'generate-zip', ['js', 'css', 'makepot', 'compress'] );
 
  	grunt.registerTask( 'create-plugin', 'Generating new plugin...', function() {
- 	    var folder, name, slug;
+ 	    var folder, name, slug, domain;
 
  	    folder = grunt.option('folder');
  	    name = grunt.option('name');
  	    slug = grunt.option('slug');
+ 	    domain = grunt.option('domain');
 
  	    plugin_copy_config.dest = '../' + folder;
 
@@ -344,6 +346,7 @@ module.exports = function(grunt) {
 
  	    plugin_name = name;
  	    plugin_slug = slug;
+ 	    plugin_domain = domain ? domain : slug;
 
  	    grunt.task.run( ['copy:all'] );
  	});

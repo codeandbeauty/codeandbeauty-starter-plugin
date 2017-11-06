@@ -36,7 +36,7 @@ class CodeAndBeauty_Ajax {
 
 		$error = array(
 			'code'    => 'cannot_process',
-			'message' => __( 'Something went wrong. Please try again.', 'cad' ),
+			'message' => __( 'Something went wrong. Please try again.', 'TEXTDOMAIN' ),
 		);
 
 		if ( ! empty( $request->_wpnonce )
@@ -75,10 +75,10 @@ class CodeAndBeauty_Ajax {
 
 		if ( ! empty( $request->return ) ) {
 			$response['success'] = true;
-			$response['message'] = __( 'Yes, it work beautifully!', 'ui' );
+			$response['message'] = __( 'Yes, it work beautifully!', 'TEXTDOMAIN' );
 		} else {
 			$response['error']   = true;
-			$response['message'] = __( 'Ooopsy! The request failed!', 'ui' );
+			$response['message'] = __( 'Ooopsy! The request failed!', 'TEXTDOMAIN' );
 		}
 
 		return $response;
