@@ -35,7 +35,7 @@ class CodeAndBeauty_Ajax {
 		}
 
 		$error = array(
-			'code' => 'cannot_process',
+			'code'    => 'cannot_process',
 			'message' => __( 'Something went wrong. Please try again.', 'cad' ),
 		);
 
@@ -77,7 +77,7 @@ class CodeAndBeauty_Ajax {
 			$response['success'] = true;
 			$response['message'] = __( 'Yes, it work beautifully!', 'ui' );
 		} else {
-			$response['error'] = true;
+			$response['error']   = true;
 			$response['message'] = __( 'Ooopsy! The request failed!', 'ui' );
 		}
 

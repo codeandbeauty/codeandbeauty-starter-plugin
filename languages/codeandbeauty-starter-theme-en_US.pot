@@ -13,10 +13,30 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: inc/class-ajax.php:32
+#: inc/class-ajax.php:39
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: inc/class-assets.php:119
+#: inc/class-ajax.php:78
+msgid "Yes, it work beautifully!"
+msgstr ""
+
+#: inc/class-ajax.php:81
+msgid "Ooopsy! The request failed!"
+msgstr ""
+
+#: inc/class-assets.php:135, inc/class-assets.php:183
 msgid "An error occur while processing. Please contact your administrator."
+msgstr ""
+
+#: inc/class-menu.php:24, inc/class-menu.php:25
+msgid "Menu"
+msgstr ""
+
+#: templates/admin-page.php:2
+msgid "Your Plugin Admin Page"
+msgstr ""
+
+#: templates/admin-page.php:3
+msgid "Write your administration page here..."
 msgstr ""

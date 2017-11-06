@@ -32,6 +32,16 @@ module.exports = function(grunt) {
  	        'assets/css/admin.css': 'assets/sass/admin.scss',
  	        'assets/css/front.css': 'assets/sass/front.scss'
  	    },
+ 	    php_files: [
+ 	        '*.php',
+ 	        'inc/*.php',
+ 	        'inc/**/*.php',
+ 	        'templates/*.php',
+ 	        'templates/**/*.php',
+ 	        'tests/*.php',
+ 	        'tests/php/*.php',
+ 	        'tests/php/**/*.php'
+ 	    ],
  	    translation: {
  	        dir: 'language/',
  	        ignore_files: [
@@ -219,20 +229,11 @@ module.exports = function(grunt) {
 			sniff: {
 				src: conf.php_files,
 				options: {
-					bin: '../../../../../phpcs/scripts/phpcs',
+					bin: '../../../../../../phpcs/bin/phpcs',
 					standard: 'WordPress-Core',
 					verbose: true
 				}
 			}
-		},
-
-		phpcbf: {
-			options: {
-				noPatch: true,
-				bin: '../../../../../phpcs/scripts/phpcs',
-				standard: 'WordPress-Core'
-			},
-			main: conf.php_files
 		},
 
 		// PHP: Unit tests.
@@ -241,9 +242,9 @@ module.exports = function(grunt) {
 				dir: ''
 			},
 			options: {
-				bootstrap: 'unit-test/bootstrap.php',
+				bootstrap: 'tests/bootstrap.php',
 				testsuite: 'default',
-				configuration: 'unit-test/phpunit.xml',
+				configuration: 'tests/phpunit.xml',
 				colors: true,
 				staticBackup: false,
 				noGlobalsBackup: false
@@ -256,6 +257,9 @@ module.exports = function(grunt) {
 
  	// Validate and compile sass files
  	grunt.registerTask( 'css', ['sass', 'autoprefixer', 'cssmin'] );
+
+    // Validate PHP files
+    grunt.registerTask( 'php', ['phplint', 'phpcs'] );
 
  	// Generate translation
  	grunt.registerTask( 'makepot', ['makepot'] );

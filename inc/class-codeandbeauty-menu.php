@@ -11,23 +11,23 @@ class CodeAndBeauty_Menu {
 	/**
 	 * @var CodeAndBeauty
 	 */
-	protected $mainClass;
+	protected $main_class;
 
 	public function __construct( CodeAndBeauty $code_and_beauty ) {
-		$this->mainClass = $code_and_beauty;
+		$this->main_class = $code_and_beauty;
 
 		// Set the adder hook
 		add_action( 'admin_menu', array( $this, 'set_menu' ) );
 	}
 
 	public function set_menu() {
-		$title = __( 'Menu', 'ui' );
+		$title      = __( 'Menu', 'ui' );
 		$menu_title = __( 'Menu', 'ui' );
 
 		$menu = add_menu_page( $title, $menu_title, 'manage_options', 'codeandbeauty-menu', array( $this, 'get_page' ) );
 
 		// Let's add the unique menu ID as one of admin's valid pages
-		$this->mainClass->assets->add_admin_valid_page( $menu );
+		$this->main_class->assets->add_admin_valid_page( $menu );
 
 		// Set a hook unto the page that is called before it is rendered.
 		add_action( "load-{$menu}", array( $this, 'pre_process_page' ) );
@@ -45,6 +45,6 @@ class CodeAndBeauty_Menu {
 
 		// Sample:
 		// @Note: Customize `admin-page.php` template or remove the line below.
-		$this->mainClass->render( 'templates/admin-page' );
+		$this->main_class->render( 'templates/admin-page' );
 	}
 }

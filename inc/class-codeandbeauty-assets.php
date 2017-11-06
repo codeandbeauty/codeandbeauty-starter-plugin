@@ -38,13 +38,13 @@ class CodeAndBeauty_Assets {
 	/**
 	 * @var CodeAndBeauty
 	 */
-	protected $mainClass;
+	protected $main_class;
 
 	public function __construct( CodeAndBeauty $code_and_beauty ) {
-		$this->mainClass = $code_and_beauty;
+		$this->main_class = $code_and_beauty;
 
 		// Let's grab the plugin url and version first
-		$this->src = $code_and_beauty->__get( 'plugin_url' ) . 'assets/';
+		$this->src     = $code_and_beauty->__get( 'plugin_url' ) . 'assets/';
 		$this->version = $code_and_beauty->__get( 'version' );
 
 		// Set front assets
@@ -66,7 +66,7 @@ class CodeAndBeauty_Assets {
 		global $pagenow, $typenow;
 
 		$valid_pages = $this->admin_valid_pages;
-		$screen = get_current_screen();
+		$screen      = get_current_screen();
 
 		if ( empty( $valid_pages )
 			|| ( $pagenow && in_array( $pagenow, $valid_pages ) )
@@ -100,7 +100,7 @@ class CodeAndBeauty_Assets {
 		 * the entries in the array.
 		 */
 		$css_dependencies = array( 'dashicons' );
-		$js_dependencies = array( 'jquery', 'backbone' );
+		$js_dependencies  = array( 'jquery', 'backbone' );
 
 		/***************************************
 		 * Include your stylesheets here
@@ -129,11 +129,11 @@ class CodeAndBeauty_Assets {
 
 	protected function get_admin_local_vars() {
 		$vars = array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
 			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
 			'messages' => array(
 				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'cad' ),
-			)
+			),
 		);
 
 		/**
@@ -155,7 +155,7 @@ class CodeAndBeauty_Assets {
 		 * the entries in the array.
 		 */
 		$css_dependencies = array( 'dashicons' );
-		$js_dependencies = array( 'jquery' );
+		$js_dependencies  = array( 'jquery' );
 
 		/***************************************
 		 * Include your stylesheets here
@@ -177,7 +177,7 @@ class CodeAndBeauty_Assets {
 
 	protected function get_local_vars() {
 		$vars = array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
 			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
 			'messages' => array(
 				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'cad' ),
