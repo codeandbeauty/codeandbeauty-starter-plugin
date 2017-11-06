@@ -2,7 +2,7 @@
 /**
  * Class CodeAndBeauty_Assets
  *
- * This class is use to load admin and front assets simultaneously.
+ * Upfront and backend assets handler.
  */
 class CodeAndBeauty_Assets {
 	/**
@@ -35,10 +35,17 @@ class CodeAndBeauty_Assets {
 	 */
 	protected $admin_valid_pages = array();
 
-	public function __construct( $mainClass ) {
+	/**
+	 * @var CodeAndBeauty
+	 */
+	protected $mainClass;
+
+	public function __construct( CodeAndBeauty $code_and_beauty ) {
+		$this->mainClass = $code_and_beauty;
+
 		// Let's grab the plugin url and version first
-		$this->src = $mainClass->__get( 'plugin_url' ) . 'assets/';
-		$this->version = $mainClass->__get( 'version' );
+		$this->src = $code_and_beauty->__get( 'plugin_url' ) . 'assets/';
+		$this->version = $code_and_beauty->__get( 'version' );
 
 		// Set front assets
 		add_action( 'wp_enqueue_scripts', array( $this, 'front_assets' ) );
@@ -70,6 +77,15 @@ class CodeAndBeauty_Assets {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Helper function to add admin valid page.
+	 *
+	 * @param $page
+	 */
+	public function add_admin_valid_page( $page ) {
+		array_push( $this->admin_valid_pages, $page );
 	}
 
 	public function admin_assets() {
@@ -107,11 +123,11 @@ class CodeAndBeauty_Assets {
 		wp_enqueue_script( 'cad-admin-js', $this->src . 'js/admin.min.js', $js_dependencies, $this->version, true );
 
 		// Set admin local variables
-		$local_vars = $this->get_admin_vars();
+		$local_vars = $this->get_admin_local_vars();
 		wp_localize_script( 'cad-admin-js', 'codeandbeauty', $local_vars );
 	}
 
-	protected function get_admin_vars() {
+	protected function get_admin_local_vars() {
 		$vars = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
@@ -119,6 +135,14 @@ class CodeAndBeauty_Assets {
 				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'cad' ),
 			)
 		);
+
+		/**
+		 * Fired before local variables is printed.
+		 *
+		 * If your writing a complex plugin where you needed to add localize variables per say,
+		 * this hook is useful to help you achieve that.
+		 */
+		$vars = apply_filters( 'codeandbeauty_admin_local_vars', $vars );
 
 		return $vars;
 	}
@@ -149,5 +173,17 @@ class CodeAndBeauty_Assets {
 		 * Sample:
 		 * `wp_enqueue_script( 'cad-script', $this->src . 'js/script.min.js', $js_dependencies, $this->version, true );`
 		 *************************************/
+	}
+
+	protected function get_local_vars() {
+		$vars = array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
+			'messages' => array(
+				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'cad' ),
+			),
+		);
+
+		return $vars;
 	}
 }

@@ -2,28 +2,35 @@
 /**
  * Class CodeAndBeauty_Ajax
  *
- * This class is use to set server side ajax request callback.
- * Each method added here, except `process_ajax_request` are callback method
- * use in JS ajax request.
+ * Use as ajax request/response handler.
+ *
+ * For each request require an `action`. The name of the action param is also the name of the
+ * class method name that will be called and executed prior to the request.
+ * Example: If the action name is `register_user` (action=register_user), there should be a method
+ * added `public function register_user($request) {}`.
+ *
+ * @since 1.0.0
  */
 class CodeAndBeauty_Ajax {
 	public function __construct() {
 		/**
-		 * Set ajax request hook.
+		 * Set the only actionable hook our ajax request have.
 		 *
-		 * Note*:
-		 *  Replace `{PREFIX}` with your actual plugin prefix
-		 **/
+		 * You may add additional actionable hooks below, depending on your usage.
+		 */
 		add_action( 'wp_ajax_codeandbeauty_ajax_request', array( $this, 'process_ajax_request' ) );
 		add_action( 'wp_ajax_nopriv_codeandbeauty_ajax_request', array( $this, 'process_ajax_request' ) );
 	}
 
+	/**
+	 * Use to receive and process any ajax request.
+	 */
 	public function process_ajax_request() {
 		$request = json_decode( file_get_contents( 'php://input' ) );
 
 		if ( empty( $request ) ) {
 			// Try the get $_REQUEST method, maybe the corresponding JS code is
-			// using native javascript or jquery
+			// using native javascript or jquery library.
 			$request = json_encode( $_REQUEST );
 		}
 
@@ -50,5 +57,30 @@ class CodeAndBeauty_Ajax {
 		}
 
 		wp_send_json_error( $error );
+	}
+
+	/**
+	 * Test request.
+	 *
+	 * @todo: Remove this method on production. This method is only use to test the request process.
+	 *
+	 * @param $request {
+	 *      `return` (boolean) Whether to return the success message or error.
+	 * }
+	 *
+	 * @return array
+	 */
+	public function test_request( $request ) {
+		$response = array();
+
+		if ( ! empty( $request->return ) ) {
+			$response['success'] = true;
+			$response['message'] = __( 'Yes, it work beautifully!', 'ui' );
+		} else {
+			$response['error'] = true;
+			$response['message'] = __( 'Ooopsy! The request failed!', 'ui' );
+		}
+
+		return $response;
 	}
 }

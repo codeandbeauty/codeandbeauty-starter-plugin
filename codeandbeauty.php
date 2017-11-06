@@ -91,10 +91,15 @@ final class CodeAndBeauty {
 		if ( $this->render( 'inc/class-ajax' ) ) {
 			$this->__set( 'ajax', new CodeAndBeauty_Ajax() );
 		}
-;
+
 		// Load assets class to include the needed scripts and stylesheets
 		if ( $this->render( 'inc/class-assets' ) ) {
 			$this->__set( 'assets', new CodeAndBeauty_Assets( $this ) );
+		}
+
+		// Set admin menu page(s)
+		if ( $this->render( 'inc/class-menu' ) ) {
+			$this->__set( 'admin_menu', new CodeAndBeauty_Menu( $this ) );
 		}
 
 		/**
