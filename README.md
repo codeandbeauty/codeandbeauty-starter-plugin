@@ -13,7 +13,7 @@ git clone https://github.com/codeandbeauty/starter-plugin.git
 ##### Manual Customization:
 * Change the class prefix `CodeAndBeauty` into your desired prefix. Class prefix usually the same with your plugin name (i.e. MySimplePlugin)
 * Change all instances of `codeandbeauty` to your plugin slug (i.e. mysimpleplugin)
-* Change all instances of `cad`, the domain slug, into your desired domain slug
+* Change all instances of `TEXTDOMAIN`, the domain slug, into your desired domain slug
 
 Your all set and ready to start building your awesome WordPress plugin.
 
@@ -22,7 +22,7 @@ You can use `Gulp` or `Grunt` to generate your new plugin.
 
 *Using Grunt*
 ````
-$ grunt create-plugin --folder=your-plugin-name --name=YourPluginName --slug=yourpluginname
+$ grunt create-plugin --folder=your-plugin-name --name=YourPluginName --slug=yourpluginname --domain=cad
 ````
 Params:
 * --folder = The name of folder/directory of your new plugin.
@@ -30,11 +30,11 @@ Params:
 * --slug = The slug use as prefix to your plugin hooks, functions and other area that require prefixes.
 * --domain = The domain slug of your plugin. If empty, it will use whatever string set in `--slug`
 
-#####What this command do?
+##### What this command do?
 - It generates a new folder
 - It changes the file, class, and slug names.
 
-#####What's next?
+##### What's next?
 Change the plugin name, description, version, author etc at the main plugin file. (i.e. codeandbeauty.php)
 
 *Start developing your awesome WordPress plugin!*
