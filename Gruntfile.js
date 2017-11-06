@@ -17,9 +17,7 @@ module.exports = function(grunt) {
  	// Load all grunt tasks.
  	require( 'load-grunt-tasks' )(grunt);
 
- 	grunt.loadNpmTasks('grunt-contrib-qunit');
-
- 	var buildtime, conf, pkg;
+ 	var buildtime, conf, pkg, banner;
 
  	buildtime = new Date().toISOString();
 
@@ -31,13 +29,14 @@ module.exports = function(grunt) {
  	    sass_folder: 'assets/sass/',
  	    css_folder: 'assets/css/',
  	    css_files: {
- 	        'assets/css/style.css': 'assets/sass/style.scss'
+ 	        'assets/css/admin.css': 'assets/sass/admin.scss',
+ 	        'assets/css/front.css': 'assets/sass/front.scss'
  	    },
  	    translation: {
  	        dir: 'language/',
  	        ignore_files: [
                 '(^.php)',	  // Ignore non-php files.
- 				'unit-test/', // Upgrade tests
+ 				'tests/', // Unit tests
  				'node_modules/',
  				'.sass-cache' // In case .sass-cache get's generated
  	        ],
@@ -45,6 +44,12 @@ module.exports = function(grunt) {
  	    }
  	};
  	pkg = grunt.file.readJSON('package.json');
+
+ 	banner = '/*! <%= pkg.title %> - v<%= pkg.version %>\n' +
+             ' * Author: <%= pkg.author %> <<%= pkg.author_email%>>\n' +
+             ' * Copyright (c) <%= grunt.template.today("yyyy") %>;\n' +
+             ' * Licensed: GNU General Public License v2 or later\n' +
+             ' */\n';
 
  	grunt.initConfig({
  	    pkg: pkg,
@@ -93,11 +98,7 @@ module.exports = function(grunt) {
 					extDot: 'last'
 				}],
 				options: {
-					banner: '/*! <%= pkg.title %> - v<%= pkg.version %>\n' +
-						' * <%= pkg.homepage %>\n' +
-						' * Copyright (c) <%= grunt.template.today("yyyy") %>;' +
-						' * Licensed GPLv2+' +
-						' */\n',
+					banner: banner,
 					mangle: {
 						except: ['jQuery']
 					}
@@ -138,11 +139,7 @@ module.exports = function(grunt) {
 		// CSS: Minify css files (create a .min.css file).
 		cssmin: {
 			options: {
-				banner: '/*! <%= pkg.title %> - v<%= pkg.version %>\n' +
-					' * <%= pkg.homepage %>\n' +
-					' * Copyright (c) <%= grunt.template.today("yyyy") %>;' +
-					' * Licensed GPLv2+' +
-					' */\n'
+				banner: banner
 			},
 			minify: {
 				expand: true,
@@ -165,9 +162,9 @@ module.exports = function(grunt) {
 					potFilename: conf.translation.textdomain + '.pot',
 					potHeaders: {
 						'poedit': true, // Includes common Poedit headers.
-						'language-team': pkg.author_info.name + ' <' + pkg.author_info.email + '>',
-						'report-msgid-bugs-to': pkg.author_info.report_bugs_to,
-						'last-translator': pkg.author_info.name + ' <' + pkg.author_info.email + '>',
+						'language-team': pkg.author + ' <' + pkg.author_email + '>',
+						'report-msgid-bugs-to': pkg.author_uri,
+						'last-translator': pkg.author + ' <' + pkg.author_email + '>',
 						'x-generator': 'grunt-wp-i18n',
 						'x-poedit-keywordslist': true // Include a list of all possible gettext functions.
 					},
@@ -251,10 +248,6 @@ module.exports = function(grunt) {
 				staticBackup: false,
 				noGlobalsBackup: false
 			}
-		},
-
-		qunit: {
-		    all: ['tests/qunit/index.html']
 		}
  	});
 

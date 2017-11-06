@@ -12,9 +12,9 @@ var gulp = require( 'gulp' ),
 		pkg: pkg
 	},
 	banner = '/**! <%=title%> -v <%=version%>\n' +
+	' * Author: <%=pkg.author%> <<%=pkg.author_email%>>\n' +
 	' * Copyright (c) <%=datestring%>\n' +
-	' * Author <%=pkg.author%> <<%=pkg.author_email%>>\n' +
-	' * License GPvL2 or higher\n' +
+	' * License: GNU General Public License v2 or later\n' +
 	'!**/\n',
 	php_files = [
 		'*.php',
