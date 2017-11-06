@@ -1,5 +1,5 @@
-/* global Backbone, jQuery */
-(function(win, $){
+/* global Backbone */
+(function(win){
     'use strict';
 
     var View, Request;
@@ -66,11 +66,11 @@
         },
 
         serverError: function () {
-            var view = new View();
+            this.server_error = new View();
         }
     });
 
     // Make the request and view instance accessible anywhere
     win.codeandbeauty.Request = Request;
     win.codeandbeauty.ServerError = View;
-})(window, jQuery);
+})(window);

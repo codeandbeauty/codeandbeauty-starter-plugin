@@ -1,5 +1,4 @@
-/* global Backbone, jQuery */
-(function(win, $){
+(function(win){
     'use strict';
 
     var View, Request;
@@ -35,6 +34,13 @@
     Required param:
         `action`    The request action or method name inside `CodeAndBeauty_Ajax` class that will be called
                     and executed.
+    Useful hooks:
+        `codeandbeauty:success_{ACTION_NAME}`   Fired whenever the request returns successfully.
+            @param:
+                (object) data       The response data in json format, if there's any.
+        `codeandbeauty:error_{ACTION_NAME}`     Fired when the request is unsuccessful.
+            @param:
+                (object) data       Optional. The error data/message.
     **/
     Request = Backbone.Model.extend({
         url: win.codeandbeauty.ajaxurl + '?action=codeandbeauty_ajax_request',
@@ -59,11 +65,11 @@
         },
 
         serverError: function () {
-            var view = new View();
+            this.server_error = new View();
         }
     });
 
     // Make the request and view instance accessible anywhere
     win.codeandbeauty.Request = Request;
     win.codeandbeauty.ServerError = View;
-})(window, jQuery);
+})(window);

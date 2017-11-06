@@ -25,7 +25,14 @@ module.exports = function(grunt) {
  	    js_folder: 'assets/js/',
  	    js_files: [
  	        'Gruntfile.js',
+ 	        'assets/js/src/common/request.js'
+ 	        // Write your js files here that will require validation
  	    ],
+ 	    js_files_concat: {
+ 	        'assets/js/admin.js': [
+ 	            'assets/js/src/common/request.js'
+ 	        ]
+ 	    },
  	    sass_folder: 'assets/sass/',
  	    css_folder: 'assets/css/',
  	    css_files: {
@@ -98,12 +105,22 @@ module.exports = function(grunt) {
 			}
 		},
 
+		// Concatenate js files
+		concat: {
+		    options: {
+		        stripBanners: true
+		    },
+		    scripts: {
+		        files: conf.js_files_concat
+		    }
+		},
+
         // JS: Compile/minify js files.
 		uglify: {
 			all: {
 				files: [{
 					expand: true,
-					src: ['*.js', '!*.min.js', '!Gruntfile.js', '!Gulpfile.js'],
+					src: ['assets/js/*.js', '!*assets/js/*.min.js'],
 					ext: '.min.js',
 					extDot: 'last'
 				}],
@@ -211,7 +228,16 @@ module.exports = function(grunt) {
 		            '!.sass-cache/',
 		            '!.idea/', // PHPStorm config
 		            '!.idea/*', // PHPStorm config
-		            '!.idea/**' // PHPStorm config
+		            '!.idea/**', // PHPStorm config
+		            '!log/',
+		            '!log/*',
+		            '!log/**',
+		            '!tmp/',
+		            '!tmp/*',
+		            '!tmp/**',
+		            '!tests/*',
+		            '!tests/**',
+		            '!tests/'
 		        ]
 		    }
 		},
@@ -253,7 +279,7 @@ module.exports = function(grunt) {
  	});
 
     // Validate and compile js files
- 	grunt.registerTask( 'js', ['jsvalidate', 'jshint', 'uglify'] );
+ 	grunt.registerTask( 'js', ['jsvalidate', 'jshint', 'concat', 'uglify'] );
 
  	// Validate and compile sass files
  	grunt.registerTask( 'css', ['sass', 'autoprefixer', 'cssmin'] );

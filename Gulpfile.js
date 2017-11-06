@@ -154,6 +154,8 @@ gulp.task( 'makepot', function() {
 		.pipe(gulp.dest('languages/' + pkg.name + '-en_US.pot'));
 });
 
+gulp.task( 'php', ['phplint', 'phpcs']);
+
 gulp.task( 'generate-zip', function() {
 	var zip = require( 'gulp-zip' ),
 		notify = require('gulp-notify'),
