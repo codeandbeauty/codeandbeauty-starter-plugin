@@ -108,7 +108,7 @@ class CodeAndBeauty_Assets {
 		 * Sample:
 		 * `wp_enqueue_style( 'cad-stylesheet', $this->src . 'css/style.min.css', $css_dependencies, $this->version );`
 		 **************************************/
-		wp_enqueue_style( 'cad-admin', $this->src . 'css/admin.min.css', $css_dependencies, $this->version );
+		wp_enqueue_style( 'precodeandbeauty-admin', $this->src . 'css/admin.min.css', $css_dependencies, $this->version );
 
 		/**************************************
 		 * Include your scripts here
@@ -120,17 +120,17 @@ class CodeAndBeauty_Assets {
 		 * `wp_enqueue_script( 'cad-script', $this->src . 'js/script.min.js', $js_dependencies, $this->version, true );`
 		 *************************************/
 		// Admin build
-		wp_enqueue_script( 'cad-admin-js', $this->src . 'js/admin.min.js', $js_dependencies, $this->version, true );
+		wp_enqueue_script( 'precodeandbeauty-admin-js', $this->src . 'js/admin.min.js', $js_dependencies, $this->version, true );
 
 		// Set admin local variables
 		$local_vars = $this->get_admin_local_vars();
-		wp_localize_script( 'cad-admin-js', 'codeandbeauty', $local_vars );
+		wp_localize_script( 'precodeandbeauty-admin-js', 'precodeandbeauty', $local_vars );
 	}
 
 	protected function get_admin_local_vars() {
 		$vars = array(
 			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
-			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
+			'_wpnonce' => wp_create_nonce( 'precodeandbeauty_nonce' ),
 			'messages' => array(
 				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'TEXTDOMAIN' ),
 			),
@@ -142,7 +142,7 @@ class CodeAndBeauty_Assets {
 		 * If your writing a complex plugin where you needed to add localize variables per say,
 		 * this hook is useful to help you achieve that.
 		 */
-		$vars = apply_filters( 'codeandbeauty_admin_local_vars', $vars );
+		$vars = apply_filters( 'precodeandbeauty_admin_local_vars', $vars );
 
 		return $vars;
 	}
@@ -178,7 +178,7 @@ class CodeAndBeauty_Assets {
 	protected function get_local_vars() {
 		$vars = array(
 			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
-			'_wpnonce' => wp_create_nonce( 'codeandbeauty_nonce' ),
+			'_wpnonce' => wp_create_nonce( 'precodeandbeauty_nonce' ),
 			'messages' => array(
 				'server_error' => __( 'An error occur while processing. Please contact your administrator.', 'TEXTDOMAIN' ),
 			),

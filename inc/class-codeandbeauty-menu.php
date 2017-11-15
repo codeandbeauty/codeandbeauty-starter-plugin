@@ -21,10 +21,10 @@ class CodeAndBeauty_Menu {
 	}
 
 	public function set_menu() {
-		$title      = __( 'Menu', 'ui' );
-		$menu_title = __( 'Menu', 'ui' );
+		$title      = __( 'Menu', 'TEXTDOMAIN' );
+		$menu_title = __( 'Menu', 'TEXTDOMAIN' );
 
-		$menu = add_menu_page( $title, $menu_title, 'manage_options', 'codeandbeauty-menu', array( $this, 'get_page' ) );
+		$menu = add_menu_page( $title, $menu_title, 'manage_options', 'precodeandbeauty-menu', array( $this, 'get_page' ) );
 
 		// Let's add the unique menu ID as one of admin's valid pages
 		$this->main_class->assets->add_admin_valid_page( $menu );

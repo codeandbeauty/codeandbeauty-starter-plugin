@@ -10,16 +10,19 @@
  * License: GPLv2 or higher
  */
 
-//d: Replace `codeandbeauty` with your actual plugin prefix/name
-if ( ! function_exists( 'codeandbeauty' ) ) :
+try {
 	require_once __DIR__ . DIRECTORY_SEPARATOR . 'inc/class-codeandbeauty.php';
 
-	function codeandbeauty() {
+	/*d: Replace `precodeandbeauty` with your actual plugin prefix/name d:*/
+	function precodeandbeauty() {
 		return CodeAndBeauty::instance();
 	}
 
 	// Backward compatibility
-	$GLOBALS['CodeAndBeauty'] = codeandbeauty();
-else :
-	// Let someone know that your plugin got mess up!
-endif;
+	$GLOBALS['CodeAndBeauty'] = precodeandbeauty();
+} catch( Exception $e ) {
+	// Let someone know that your plugin have conflict
+	if ( function_exists( 'error_log' ) ) :
+		error_log( $e->getMessage() );
+	endif;
+}

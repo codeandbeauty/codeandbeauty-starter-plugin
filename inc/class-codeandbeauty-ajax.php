@@ -18,8 +18,8 @@ class CodeAndBeauty_Ajax {
 		 *
 		 * You may add additional actionable hooks below, depending on your usage.
 		 */
-		add_action( 'wp_ajax_codeandbeauty_ajax_request', array( $this, 'process_ajax_request' ) );
-		add_action( 'wp_ajax_nopriv_codeandbeauty_ajax_request', array( $this, 'process_ajax_request' ) );
+		add_action( 'wp_ajax_precodeandbeauty_ajax_request', array( $this, 'process_ajax_request' ) );
+		add_action( 'wp_ajax_nopriv_precodeandbeauty_ajax_request', array( $this, 'process_ajax_request' ) );
 	}
 
 	/**
@@ -40,7 +40,7 @@ class CodeAndBeauty_Ajax {
 		);
 
 		if ( ! empty( $request->_wpnonce )
-			&& wp_verify_nonce( $request->_wpnonce, 'codeandbeauty_nonce' ) ) {
+			&& wp_verify_nonce( $request->_wpnonce, 'precodeandbeauty_nonce' ) ) {
 			$request_action = $request->action;
 
 			if ( method_exists( $this, $request_action ) ) {

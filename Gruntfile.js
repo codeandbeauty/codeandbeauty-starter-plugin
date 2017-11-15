@@ -17,7 +17,7 @@ module.exports = function(grunt) {
  	// Load all grunt tasks.
  	require( 'load-grunt-tasks' )(grunt);
 
- 	var buildtime, conf, pkg, banner, plugin_name, plugin_slug, plugin_domain, plugin_copy_config;
+ 	var buildtime, conf, pkg, banner, plugin_name, plugin_folder, plugin_slug, plugin_domain, plugin_copy_config;
 
  	buildtime = new Date().toISOString();
 
@@ -80,21 +80,47 @@ module.exports = function(grunt) {
 		    '!logs/',
 		    '!.sass-cache/*',
 		    '!.sass-cache/**',
-		    '!.sass-cache/'
+		    '!.sass-cache/',
+		    '!.idea'
 		],
 		dest: '',
 		noEmpty: true,
 		options: {
 		    process: function(content) {
+		        var rep_text;
+
+                // Change `plugin_url`
+                content = content.replace( 'plugins_url( \'codeandbeauty-starter-plugin/\' )', 'plugins_url( \'' + plugin_folder + '/\' )' );
+
+                // Change the included main class file
+                //content = content.replace( 'inc/class-codeandbeauty.php', 'inc/class-' + plugin_folder + '.php');                // Change the filname of included classes
+
                 content = content.replace( /CodeAndBeauty/g, plugin_name );
-                content = content.replace( /codeandbeauty/g, plugin_slug );
+                content = content.replace( /precodeandbeauty/g, plugin_slug );
+
+                // Change the filename of included files
+                rep_text = plugin_slug.replace(/_/g, '-');
+                //regex = new RegExp( 'inc/class-' + plugin_slug, 'g' );
+                content = content.replace( /inc\/class-codeandbeauty/g, 'inc/class-' + rep_text );
+
+                // Change text domain
                 content = content.replace( /TEXTDOMAIN/g, plugin_domain );
+
+                // Finally remove text guide???
+                content = content.replace( /\/\*d: \*[^\*]+\* d:\*\//mg, '');
 
                 return content;
 		    }
 		},
 		rename: function( dest, src_path ) {
-		    src_path = src_path.replace( /codeandbeauty/g, plugin_slug );
+		    if ( 'codeandbeauty.php' === src_path ) {
+		        src_path = src_path.replace(/codeandbeauty/g, plugin_folder );
+		    } else {
+		        var rep_text = plugin_slug.replace(/_/g, '-');
+
+		        src_path = src_path.replace( /codeandbeauty/g, rep_text );
+		    }
+
 		    return dest + '/' + src_path;
 		}
 	};
@@ -344,6 +370,7 @@ module.exports = function(grunt) {
  	    name = name.replace( / /g, '' );
  	    slug = slug.replace( / /g, '' );
 
+        plugin_folder = folder;
  	    plugin_name = name;
  	    plugin_slug = slug;
  	    plugin_domain = domain ? domain : slug;
