@@ -163,9 +163,6 @@ gulp.task( 'generate-zip', function() {
 		files = [
 			'*',
 			'**',
-			'!docs/*',
-			'!docs/**',
-			'!docs',
 			'!node_modules/*',
 			'!node_modules/**',
 			'!node_modules',
@@ -181,8 +178,6 @@ gulp.task( 'generate-zip', function() {
 			'!assets/sass',
 			'!assets/js/common/*',
 			'!assets/js/common',
-			'!assets/**/maps/*',
-			'!assets/**/maps',
 			'!temp/*',
 			'!temp/**',
 			'!temp',
@@ -199,7 +194,7 @@ gulp.task( 'generate-zip', function() {
 });
 
 gulp.task( 'create-plugin', function(a) {
-    var argv, rename, replace, src, folder, name, slug, domain;
+    var argv, rename, replace, src, folder, name, slug, domain, ptrn;
 
     argv = require( 'yargs' ).argv;
     rename = require( 'gulp-rename' );
@@ -220,13 +215,16 @@ gulp.task( 'create-plugin', function(a) {
     name = argv.name;
     slug = argv.slug;
     domain = argv.domain ? argv.domain : slug;
+    ptrn = slug.replace(/_/g, '-');
 
     gulp.src( src )
         .pipe(rename(function(path){
-            path.basename = path.basename.replace( /codeandbeauty/g, slug );
+            path.basename = path.basename.replace( /codeandbeauty/g, ptrn );
         }))
         .pipe(replace( /CodeAndBeauty/g, name ))
-        .pipe(replace( /codeandbeauty/g, slug))
+        .pipe(replace( /precodeandbeauty/g, slug))
+        .pipe(replace(/codeandbeauty-starter-plugin/, folder))
+        .pipe(replace(/inc\/class-codeandbeauty/g, 'inc/class-' + ptrn))
         .pipe(replace( /TEXTDOMAIN/g, domain))
         .pipe(gulp.dest('../' + folder));
 });

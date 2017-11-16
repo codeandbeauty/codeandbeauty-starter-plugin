@@ -1,3 +1,4 @@
+/* global Backbone */
 (function(win){
     'use strict';
 
@@ -21,7 +22,7 @@
             var me;
 
             me = this;
-            this.$el.html( win.codeandbeauty.messages.server_error ).appendTo('body');
+            this.$el.html( win.precodeandbeauty.messages.server_error ).appendTo('body');
 
             _.delay(function() {
                 me.remove();
@@ -35,17 +36,17 @@
         `action`    The request action or method name inside `CodeAndBeauty_Ajax` class that will be called
                     and executed.
     Useful hooks:
-        `codeandbeauty:success_{ACTION_NAME}`   Fired whenever the request returns successfully.
+        `precodeandbeauty:success_{ACTION_NAME}`   Fired whenever the request returns successfully.
             @param:
                 (object) data       The response data in json format, if there's any.
-        `codeandbeauty:error_{ACTION_NAME}`     Fired when the request is unsuccessful.
+        `precodeandbeauty:error_{ACTION_NAME}`     Fired when the request is unsuccessful.
             @param:
                 (object) data       Optional. The error data/message.
     **/
     Request = Backbone.Model.extend({
-        url: win.codeandbeauty.ajaxurl + '?action=codeandbeauty_ajax_request',
+        url: win.precodeandbeauty.ajaxurl + '?action=precodeandbeauty_ajax_request',
         defaults: {
-            _wpnonce: win.codeandbeauty._wpnonce
+            _wpnonce: win.precodeandbeauty._wpnonce
         },
 
         initialize: function () {
@@ -70,6 +71,6 @@
     });
 
     // Make the request and view instance accessible anywhere
-    win.codeandbeauty.Request = Request;
-    win.codeandbeauty.ServerError = View;
+    win.precodeandbeauty.Request = Request;
+    win.precodeandbeauty.ServerError = View;
 })(window);

@@ -5,7 +5,7 @@ final class CodeAndBeauty {
 	 *
 	 * @var string
 	 */
-	private $version = '1.0.0'; // Replace with current plugin version
+	private $version = '1.0.0'; /*d: Replace with current plugin version d:*/
 
 	/**
 	 * The absolute path of this plugin.
@@ -43,7 +43,8 @@ final class CodeAndBeauty {
 	public function __construct() {
 		// Define absolute and relative path
 		$this->plugin_path = dirname( __DIR__ ) . DIRECTORY_SEPARATOR;
-		$this->plugin_url  = plugins_url( 'codeandbeauty-starter-plugin/' ); //d: Replace with your actual plugin directory name
+		/*d: Replace with your actual plugin directory name */
+		$this->plugin_url  = plugins_url( 'codeandbeauty-starter-plugin/' );
 
 		/**
 		 * Set activation and deactivation hooks
@@ -69,11 +70,11 @@ final class CodeAndBeauty {
 	}
 
 	public function on_plugin_activate() {
-		//d: Write your code that will be called whenever this plugins is activated.
+		// Write your code that will be called whenever this plugins is activated.
 	}
 
 	public function on_plugin_deactivate() {
-		//d: Write your code here that will be called upon plugin deactivation
+		// Write your code here that will be called upon plugin deactivation
 	}
 
 	public function initialized() {
@@ -97,7 +98,7 @@ final class CodeAndBeauty {
 		 *
 		 * @since 1.0.0
 		 */
-		do_action( 'codeandbeauty_initialized' );
+		do_action( 'precodeandbeauty_initialized' );
 	}
 
 	/**

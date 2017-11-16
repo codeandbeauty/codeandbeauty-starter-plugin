@@ -92,9 +92,6 @@ module.exports = function(grunt) {
                 // Change `plugin_url`
                 content = content.replace( 'plugins_url( \'codeandbeauty-starter-plugin/\' )', 'plugins_url( \'' + plugin_folder + '/\' )' );
 
-                // Change the included main class file
-                //content = content.replace( 'inc/class-codeandbeauty.php', 'inc/class-' + plugin_folder + '.php');                // Change the filname of included classes
-
                 content = content.replace( /CodeAndBeauty/g, plugin_name );
                 content = content.replace( /precodeandbeauty/g, plugin_slug );
 
@@ -294,7 +291,8 @@ module.exports = function(grunt) {
 		            '!tmp/**',
 		            '!tests/*',
 		            '!tests/**',
-		            '!tests/'
+		            '!tests/',
+		            '!README.md'
 		        ]
 		    }
 		},

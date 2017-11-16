@@ -4,7 +4,7 @@
  * Description: Write your plugin description here.
  * Author: Code&Beauty
  * Author URI: http://www.codeandbeauty.com
- * Plugin URI: http://www.codeandbeauty.com/starter-plugin
+ * Plugin URI: http://www.codeandbeauty.com/wordpress-starter-plugin
  * Version: 1.0.0
  * Text Domain: TextDomain
  * License: GPLv2 or higher
